@@ -1,6 +1,7 @@
 # progenitor.js
 
 [![Circle CI](https://circleci.com/gh/bnorton/progenitor.js.svg?style=svg)](https://circleci.com/gh/bnorton/progenitor.js)
+[![npm version](https://badge.fury.io/js/progenitor.js.svg)](http://badge.fury.io/js/progenitor.js)
 
 #Getting started
 
