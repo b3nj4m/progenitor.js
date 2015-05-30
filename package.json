@@ -1,13 +1,12 @@
 {
   "name": "progenitor.js",
   "repository": "https://github.com/bnorton/progenitor.js.git",
-  "version": "0.1.0",
+  "version": "0.9.0",
   "license": "MIT",
   "description": "",
   "keywords": [
   ],
   "dependencies": {
-    "each": "*",
     "extend": "*"
   },
   "devDependencies": {
