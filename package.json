@@ -1,12 +1,14 @@
 {
-  "name": "{{name}}.js",
-  "repository": "https://github.com/{{username}}/{{name}}.js.git",
+  "name": "progenitor.js",
+  "repository": "https://github.com/bnorton/progenitor.js.git",
   "version": "0.1.0",
   "license": "MIT",
   "description": "",
   "keywords": [
   ],
   "dependencies": {
+    "each": "*",
+    "extend": "*"
   },
   "devDependencies": {
     "minijasminenode2": "bnorton/minijasminenode"

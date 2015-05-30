@@ -1,52 +1,38 @@
-# lib.js
+# progenitor.js
 
-A base configuration and starter project for a simple JavaScript library / Component
+[![Circle CI](https://circleci.com/gh/bnorton/progenitor.js.svg?style=svg)](https://circleci.com/gh/bnorton/progenitor.js)
 
-<!-- Remove after renaming {{name}} to the real project name and adding the {{circle-ci-username}}
-[![Circle CI](https://circleci.com/gh/{{circle-ci-username}}/{{name}}.js.svg?style=svg)](https://circleci.com/gh/{{circle-ci-username}}/{{name}}.js)
--->
+#Getting started
 
-##Getting Started
+###Install it
+```bash
+$ npm install progenitor.js
+```
 
-####Clone this repository into a new directory
+###Require it
 ```javascript
-git clone git@github.com:bnorton/lib.js.git {{name}}.js
+var progenitor = require('progenitor.js');
 ```
 
-####Search the project for things to replace
-1. Rename `{{name}}` to the new library name
-1. Rename `{{username}}` with yours on GitHub and CircleCI respectively
-1. Rename `{{full name}}` with your name and company name (if any)
-
-####Add and Install dependencies
-Add any libraries / dependencies that you know of then
-```bash
-$ npm install -g browserify
-$ npm install -g uglify
-$ npm install
+###Use it
+```javascript
+// To enable inheritance from Object and Error
+Object.progeny = progenitor();
+Error.progeny = progenitor();
 ```
 
-####Add tests
-```bash
-$ make test
+The interface to inherit is `progeny(newName, instanceMethods, options)`
+ - options can have a key `classMethods` that add methods to the class itself.
+ - the class is accessible via `instance.class`.
+ - the special instance method `init` is called when during the process of returning a new object.
+ - the special instance method `super(functionName, *args)` will call any super class instance method. (Note: it will not error if the method does not exist)
+ - the special class method `inherited` is called during the process of generating a new derived class.
+
+```javascript
+BaseController = Object.progeny('BaseController', {
+  // Instance methods
+}, {
+  classMethods: {
+  }
+});
 ```
-
-####Add implementations
-```bash
-$ make test
-```
-
-####Build you first browserified / minified versions and publish
-```bash
-$ make
-$ git commit -am "[Release] Version x.y.z"
-$ git tag -a 0.9.0 -m "[Release] Version x.y.z" -m "Other words of wisdom and what has changed"
-$ npm publish
-```
-
-#### Add this project to CircleCI
-Enable the build status at the top of this doc
-
-------------------------
-
-####Replace this document with the real deal and `#win`
