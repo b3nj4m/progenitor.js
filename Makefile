@@ -1,18 +1,18 @@
 all: build minify headerify
 
 build:
-	@browserify lib/index.js --standalone progenitor > progenitor.js
+	@browserify lib/index.js --standalone progenitor > index.js
 
 minify:
-	@uglifyjs progenitor.js --compress --mangle --stats --output progenitor.min.js --source-map progenitor.min.js.map
+	@uglifyjs index.js --compress --mangle --stats --output index.min.js --source-map index.min.js.map
 
 headerify:
 	@cat ./lib/header.js
-	@cat ./lib/header.js > tmp.js && cat progenitor.js >> tmp.js && mv tmp.js progenitor.js
-	@cat ./lib/header.js > tmp.js && cat progenitor.min.js >> tmp.js && mv tmp.js progenitor.min.js
+	@cat ./lib/header.js > tmp.js && cat index.js >> tmp.js && mv tmp.js index.js
+	@cat ./lib/header.js > tmp.js && cat index.min.js >> tmp.js && mv tmp.js index.min.js
 
 clean:
-	@rm progenitor.js progenitor.min.js progenitor.min.js.map
+	@rm index.js index.min.js index.min.js.map
 
 test:
 	([ -e ./node_modules/.bin/minijasminenode2 ] && ./node_modules/.bin/minijasminenode2 --verbose --forceexit **/*_spec.js) || (printf "\nMini Jasmine not installed @ ./node_modules/.bin/minijasminenode2...\n\nTrying npm install\n\n" && npm install)
