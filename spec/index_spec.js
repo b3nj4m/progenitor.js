@@ -1,9 +1,7 @@
 describe('progenitor', function() {
-  var Athlete, Runner, instance, Progenitor = require('../lib/index');
+  var Athlete, Runner, instance;
 
-  beforeEach(function() {
-    Object.progeny = new Progenitor(Object);
-  });
+  require('../lib/index')();
 
   describe('.progeny', function() {
     var inheritedArgs;
