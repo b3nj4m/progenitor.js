@@ -97,7 +97,7 @@ module.exports = function extend() {
 var noop = function() {},
   extend = require('extend');
 
-progenitor = function(baseClass) {
+var progenitorFactory = function(baseClass) {
   baseClass.classMethods || (baseClass.classMethods = {});
   baseClass.classMethods.inherited || (baseClass.classMethods.inherited = noop);
 
@@ -118,7 +118,7 @@ progenitor = function(baseClass) {
     };
 
     var callSuperClass = function(name) { return baseClass.classMethods[name] && baseClass.classMethods[name].apply(this, Array.prototype.slice.call(arguments, 1));},
-      defaultClassMethods = { class: baseClass, className: newClassName, super: callSuperClass, progeny: progenitor(klass) },
+      defaultClassMethods = { class: baseClass, className: newClassName, super: callSuperClass, progeny: progenitorFactory(klass) },
       classMethods = extend({}, baseClass.classMethods, defaultClassMethods, options.classMethods);
 
     extend(klass, klass.classMethods = classMethods);
@@ -137,7 +137,10 @@ progenitor = function(baseClass) {
   }
 };
 
-exports = module.exports = progenitor;
+exports = module.exports = function() {
+  Object.progeny || (Object.progeny = progenitorFactory(Object));
+  Error.progeny || (Error.progeny = progenitorFactory(Object));
+};
 
 },{"extend":1}]},{},[2])(2)
 });
