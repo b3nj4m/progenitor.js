@@ -139,7 +139,7 @@ var progenitorFactory = function(baseClass) {
 
 exports = module.exports = function() {
   Object.progeny || (Object.progeny = progenitorFactory(Object));
-  Error.progeny || (Error.progeny = progenitorFactory(Object));
+  Error.progeny || (Error.progeny = progenitorFactory(Error));
 };
 
 },{"extend":1}]},{},[2])(2)
