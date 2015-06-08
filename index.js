@@ -95,7 +95,8 @@ module.exports = function extend() {
 
 },{}],2:[function(require,module,exports){
 var noop = function() {},
-  extend = require('extend');
+  extend = require('extend'),
+  progenyCache = {};
 
 var progenitorFactory = function(baseClass) {
   baseClass.classMethods || (baseClass.classMethods = {});
@@ -104,13 +105,17 @@ var progenitorFactory = function(baseClass) {
   baseClass.instanceMethods || (baseClass.instanceMethods = {});
   baseClass.instanceMethods.init || (baseClass.instanceMethods.init = noop);
 
-  return function(newClassName, methods, options) {
+  return function(newClassName, methods, options) { var klass;
+    if(klass = progenyCache[newClassName]) {
+      return klass;
+    }
+
     methods = ((typeof methods == 'function') ? methods() : methods) || {};
     options = ((typeof options == 'function') ? options() : options) || {};
 
     options.classMethods || (options.classMethods = {});
 
-    var klass = function(isDefinition) {
+    klass = function(isDefinition) {
       if(isDefinition === 'prototype-definition') return;
 
       baseClass.instanceMethods.init.apply(this, arguments); // instance.super.init
@@ -133,7 +138,7 @@ var progenitorFactory = function(baseClass) {
 
     baseClass.classMethods.inherited.apply(baseClass, [klass]);
 
-    return klass;
+    return (progenyCache[newClassName] = klass);
   }
 };
 
