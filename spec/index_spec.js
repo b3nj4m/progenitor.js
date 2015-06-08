@@ -37,7 +37,12 @@ describe('progenitor', function() {
       });
     });
 
-    it('class should have the name of the class', function() {
+    it('should cache the class definition', function() {
+      expect(Athlete).toBe(Object.progeny('Athlete'));
+      expect(Runner).toBe(Object.progeny('Runner'));
+    });
+
+    it('should have the name of the class', function() {
       expect(Athlete.className).toBe('Athlete');
       expect(Runner.className).toBe('Runner');
     });
