@@ -3,8 +3,12 @@
   "repository": "https://github.com/bnorton/progenitor.js.git",
   "version": "1.0.3",
   "license": "MIT",
-  "description": "",
+  "description": "Make a progeny. This library supports many common inheritance related things",
   "keywords": [
+    "inheritance",
+    "inherit",
+    "class",
+    "projeny"
   ],
   "dependencies": {
     "extend": "*"
