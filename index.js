@@ -94,9 +94,10 @@ module.exports = function extend() {
 
 
 },{}],2:[function(require,module,exports){
+(function (global){
 var noop = function() {},
   extend = require('extend'),
-  progenyCache = {};
+  progenyCache = global.__progenyCache_ || (global.__progenyCache_ = {});
 
 var progenitorFactory = function(baseClass) {
   baseClass.classMethods || (baseClass.classMethods = {});
@@ -147,5 +148,6 @@ exports = module.exports = function() {
   Error.progeny || (Error.progeny = progenitorFactory(Error));
 };
 
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"extend":1}]},{},[2])(2)
 });

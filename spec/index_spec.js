@@ -42,6 +42,11 @@ describe('progenitor', function() {
       expect(Runner).toBe(Object.progeny('Runner'));
     });
 
+    it('should cache the class definition', function() {
+      require('../lib/index')();
+      expect(Runner).toBe(Object.progeny('Runner'));
+    });
+
     it('should have the name of the class', function() {
       expect(Athlete.className).toBe('Athlete');
       expect(Runner.className).toBe('Runner');
