@@ -3,6 +3,67 @@
  * This library may be freely distributed under the MIT license.
  */
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.progenitor = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function (global){
+var noop = function() {},
+  extend = require('extend'),
+  progenyCache = global.__progenyCache_ || (global.__progenyCache_ = {});
+
+var progenitorFactory = exports = module.exports = function(baseClass) {
+  baseClass.classMethods || (baseClass.classMethods = {});
+  baseClass.classMethods.inherited || (baseClass.classMethods.inherited = noop);
+
+  baseClass.instanceMethods || (baseClass.instanceMethods = {});
+  baseClass.instanceMethods.init || (baseClass.instanceMethods.init = noop);
+
+  return function(newClassName, methods, options) { var klass;
+    if(klass = progenyCache[newClassName]) {
+      return klass;
+    }
+
+    methods = ((typeof methods == 'function') ? methods() : methods) || {};
+    options = ((typeof options == 'function') ? options() : options) || {};
+
+    options.classMethods || (options.classMethods = {});
+
+    klass = function(isDefinition) {
+      if(isDefinition === 'prototype-definition') return;
+
+      baseClass.instanceMethods.init.apply(this, arguments); // instance.super.init
+      instanceMethods.init.apply(this, arguments); // instance.init
+    };
+
+    var callSuperClass = function(name) { return baseClass.classMethods[name] && baseClass.classMethods[name].apply(this, Array.prototype.slice.call(arguments, 1));},
+      defaultClassMethods = { class: baseClass, className: newClassName, super: callSuperClass, progeny: progenitorFactory(klass) },
+      classMethods = extend({}, baseClass.classMethods, defaultClassMethods, options.classMethods);
+
+    extend(klass, klass.classMethods = classMethods);
+
+    var callSuperInstance = function(name) { return baseClass.instanceMethods[name] && baseClass.instanceMethods[name].apply(this, Array.prototype.slice.call(arguments, 1));},
+      defaultInstanceMethods = { constructor: baseClass, class: klass, className: newClassName, super: callSuperInstance, init: noop },
+      instanceMethods = extend({}, baseClass.instanceMethods, defaultInstanceMethods, methods);
+
+    klass.prototype = new baseClass('prototype-definition');
+
+    extend(klass.prototype, klass.instanceMethods = instanceMethods);
+
+    baseClass.classMethods.inherited.apply(baseClass, [klass]);
+
+    return (progenyCache[newClassName] = klass);
+  }
+};
+
+exports = module.exports = progenitorFactory;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"extend":3}],2:[function(require,module,exports){
+var progenitorFactory = require('./factory');
+
+exports = module.exports = function() {
+  Object.progeny || (Object.progeny = progenitorFactory(Object));
+  Error.progeny || (Error.progeny = progenitorFactory(Error));
+};
+
+},{"./factory":1}],3:[function(require,module,exports){
 var hasOwn = Object.prototype.hasOwnProperty;
 var toStr = Object.prototype.toString;
 var undefined;
@@ -93,61 +154,5 @@ module.exports = function extend() {
 };
 
 
-},{}],2:[function(require,module,exports){
-(function (global){
-var noop = function() {},
-  extend = require('extend'),
-  progenyCache = global.__progenyCache_ || (global.__progenyCache_ = {});
-
-var progenitorFactory = function(baseClass) {
-  baseClass.classMethods || (baseClass.classMethods = {});
-  baseClass.classMethods.inherited || (baseClass.classMethods.inherited = noop);
-
-  baseClass.instanceMethods || (baseClass.instanceMethods = {});
-  baseClass.instanceMethods.init || (baseClass.instanceMethods.init = noop);
-
-  return function(newClassName, methods, options) { var klass;
-    if(klass = progenyCache[newClassName]) {
-      return klass;
-    }
-
-    methods = ((typeof methods == 'function') ? methods() : methods) || {};
-    options = ((typeof options == 'function') ? options() : options) || {};
-
-    options.classMethods || (options.classMethods = {});
-
-    klass = function(isDefinition) {
-      if(isDefinition === 'prototype-definition') return;
-
-      baseClass.instanceMethods.init.apply(this, arguments); // instance.super.init
-      instanceMethods.init.apply(this, arguments); // instance.init
-    };
-
-    var callSuperClass = function(name) { return baseClass.classMethods[name] && baseClass.classMethods[name].apply(this, Array.prototype.slice.call(arguments, 1));},
-      defaultClassMethods = { class: baseClass, className: newClassName, super: callSuperClass, progeny: progenitorFactory(klass) },
-      classMethods = extend({}, baseClass.classMethods, defaultClassMethods, options.classMethods);
-
-    extend(klass, klass.classMethods = classMethods);
-
-    var callSuperInstance = function(name) { return baseClass.instanceMethods[name] && baseClass.instanceMethods[name].apply(this, Array.prototype.slice.call(arguments, 1));},
-      defaultInstanceMethods = { constructor: baseClass, class: klass, className: newClassName, super: callSuperInstance, init: noop },
-      instanceMethods = extend({}, baseClass.instanceMethods, defaultInstanceMethods, methods);
-
-    klass.prototype = new baseClass('prototype-definition');
-
-    extend(klass.prototype, klass.instanceMethods = instanceMethods);
-
-    baseClass.classMethods.inherited.apply(baseClass, [klass]);
-
-    return (progenyCache[newClassName] = klass);
-  }
-};
-
-exports = module.exports = function() {
-  Object.progeny || (Object.progeny = progenitorFactory(Object));
-  Error.progeny || (Error.progeny = progenitorFactory(Error));
-};
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"extend":1}]},{},[2])(2)
+},{}]},{},[2])(2)
 });
