@@ -1,6 +1,7 @@
 # progenitor.js
 
-[![Circle CI](https://circleci.com/gh/bnorton/progenitor.js.svg?style=svg)](https://circleci.com/gh/bnorton/progenitor.js)
+[![Circle CI](https://circleci.com/gh/bnorton/progenitor.js.svg?style=svg)](https://circleci.com/gh/bnorton/progenitor.js)  
+[![Build Status](https://semaphoreci.com/api/v1/projects/3c9abad9-ef3b-4315-a85f-77ddc086968d/492530/shields_badge.svg)](https://semaphoreci.com/bnorton/progenitor-js)  
 [![npm version](https://badge.fury.io/js/progenitor.js.svg)](http://badge.fury.io/js/progenitor.js)
 
 #Getting started
