@@ -1,7 +1,7 @@
 describe('progenitor', function() {
   var Athlete, Runner, instance;
 
-  require('../lib/index')();
+  require('../index')();
 
   describe('.progeny', function() {
     var inheritedArgs;
@@ -43,7 +43,7 @@ describe('progenitor', function() {
     });
 
     it('should cache the class definition', function() {
-      require('../lib/index')();
+      require('../index')();
       expect(Runner).toBe(Object.progeny('Runner'));
     });
 

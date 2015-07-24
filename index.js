@@ -55,15 +55,7 @@ var progenitorFactory = exports = module.exports = function(baseClass) {
 exports = module.exports = progenitorFactory;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"extend":3}],2:[function(require,module,exports){
-var progenitorFactory = require('./factory');
-
-exports = module.exports = function() {
-  Object.progeny || (Object.progeny = progenitorFactory(Object));
-  Error.progeny || (Error.progeny = progenitorFactory(Error));
-};
-
-},{"./factory":1}],3:[function(require,module,exports){
+},{"extend":2}],2:[function(require,module,exports){
 var hasOwn = Object.prototype.hasOwnProperty;
 var toStr = Object.prototype.toString;
 var undefined;
@@ -154,5 +146,13 @@ module.exports = function extend() {
 };
 
 
-},{}]},{},[2])(2)
+},{}],3:[function(require,module,exports){
+var progenitorFactory = require('./lib/factory');
+
+exports = module.exports = function() {
+  Object.progeny || (Object.progeny = progenitorFactory(Object));
+  Error.progeny || (Error.progeny = progenitorFactory(Error));
+};
+
+},{"./lib/factory":1}]},{},[3])(3)
 });

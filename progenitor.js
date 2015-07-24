@@ -1,4 +1,4 @@
-var progenitorFactory = require('./factory');
+var progenitorFactory = require('./lib/factory');
 
 exports = module.exports = function() {
   Object.progeny || (Object.progeny = progenitorFactory(Object));
