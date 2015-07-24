@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "minijasminenode2": "bnorton/minijasminenode",
-    "browserify": "*"
+    "browserify": "*",
+    "uglify-js": "*"
   }
 }
