@@ -11,7 +11,7 @@
     "projeny"
   ],
   "dependencies": {
-    "extend": "*"
+    "extend": "3.x"
   },
   "devDependencies": {
     "minijasminenode2": "bnorton/minijasminenode",

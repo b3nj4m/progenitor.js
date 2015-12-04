@@ -23,7 +23,6 @@ describe('progeny cache', function() {
       });
 
       it('should have the object', function() {
-        console.log(cache.get('FooBar')());
         expect(instance.say()).toBe('hi');
         expect(instance.className).toBe('FooBar');
         expect(instance.class.className).toBe('FooBar');
