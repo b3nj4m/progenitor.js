@@ -1,7 +1,7 @@
 {
   "name": "progenitor.js",
   "repository": "https://github.com/bnorton/progenitor.js.git",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "license": "MIT",
   "description": "Make a progeny. This library supports many common inheritance related things",
   "keywords": [
