@@ -8,8 +8,8 @@ minify:
 
 headerify:
 	@cat ./lib/header.js
-	@cat ./lib/header.js > tmp.js && cat index.js >> tmp.js && mv tmp.js index.js
-	@cat ./lib/header.js > tmp.js && cat index.min.js >> tmp.js && mv tmp.js index.min.js
+	@cat ./lib/header.js > tmp.js && cat index.js >> tmp.js && cat ./lib/footer.js >> tmp.js && mv tmp.js index.js
+	@cat ./lib/header.js > tmp.js && cat index.min.js >> tmp.js && cat ./lib/footer.js >> tmp.js && mv tmp.js index.min.js
 
 clean:
 	@rm index.js index.min.js index.min.js.map

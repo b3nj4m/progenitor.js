@@ -1,9 +1,10 @@
-var cache = require('../lib/cache');
+global.progenyCache = {};
+var libCache = require('../lib/cache');
 
 describe('progeny cache', function() {
   describe('.get', function() {
     it('should return nothing', function() {
-      expect(cache.get('FooBar')).toBeNull();
+      expect(libCache.get('FooBar')).toBeNull();
     });
 
     describe('when the class has been created', function() {
@@ -14,12 +15,12 @@ describe('progeny cache', function() {
           say: function() { return 'hi' }
         });
 
-        var FooBar = cache.get('FooBar');
+        var FooBar = libCache.get('FooBar');
         instance = new FooBar();
       });
 
       it('should have the class', function() {
-        expect(cache.get('FooBar').className).toBe('FooBar');
+        expect(libCache.get('FooBar').className).toBe('FooBar');
       });
 
       it('should have the object', function() {

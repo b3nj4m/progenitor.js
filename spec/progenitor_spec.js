@@ -1,3 +1,5 @@
+global.progenyCache = {};
+
 describe('progenitor', function() {
   var Athlete, Runner, instance;
 
@@ -10,6 +12,7 @@ describe('progenitor', function() {
       Athlete = Object.progeny('Athlete', {
         init: function(name) { this.name = name; },
         say: function() { return 'I am Fit' },
+        talk: function(a,b,c) { return 'Hello '+a+', how was your '+b+c+'?' },
         speak: function() { return 'I am an '+this.className+' named: '+this.name }
       }, function() {
         return {
@@ -27,6 +30,10 @@ describe('progenitor', function() {
           say: function() {
             return this.super('say')+' and I run '+this.avgMile+' miles per day, and my name is '+this.name;
           },
+          talk: function(a,b,c,d) {
+            return this.super('talk', arguments) + ' As I have said before you\'re attire is befitting that of a '+d+' instructor.'
+          },
+          talkative: function() { return this.super.call(this, 'talk', 'Luke', 'walk', ' today'); },
           run: function() { return 'Going out to run'; }
         }
       }, {
@@ -66,11 +73,11 @@ describe('progenitor', function() {
     });
 
     it('should have the base instanceMethods', function() {
-      expect(Object.keys(Athlete.instanceMethods)).toEqual(['init', 'constructor', 'class', 'className', 'super', 'say', 'speak']);
+      expect(Object.keys(Athlete.instanceMethods)).toEqual(['init', 'constructor', 'class', 'className', 'super', 'say', 'talk', 'speak']);
     });
 
     it('should have the sub instanceMethods', function() {
-      expect(Object.keys(Runner.instanceMethods)).toEqual(['init', 'constructor', 'class', 'className', 'super', 'say', 'speak', 'run']);
+      expect(Object.keys(Runner.instanceMethods)).toEqual(['init', 'constructor', 'class', 'className', 'super', 'say', 'talk', 'speak', 'talkative', 'run']);
     });
 
     it('calls class methods', function() {
@@ -115,6 +122,15 @@ describe('progenitor', function() {
         expect(runner.say()).toBe('I am Fit and I run 5.5 miles per day, and my name is George');
         expect(runner.speak()).toBe('I am an Runner named: George');
         expect(runner.run()).toBe('Going out to run');
+      });
+
+      it('passes arguments to the superclass', function() {
+        expect(runner.talkative()).toBe('Hello Luke, how was your walk today?');
+      });
+
+      it('passes an arguments object to the superclass', function() {
+        expect(athlete.talk('Jon', 'run', ' just now')).toBe('Hello Jon, how was your run just now?');
+        expect(runner.talk('Mark', 'swim', ' earlier', 'yoga')).toBe('Hello Mark, how was your swim earlier? As I have said before you\'re attire is befitting that of a yoga instructor.');
       });
 
       it('has the given values', function() {
