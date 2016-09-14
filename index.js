@@ -10,7 +10,7 @@ var progenitorFactory = exports = module.exports = function(baseClass) {
   baseClass.instanceMethods.init || (baseClass.instanceMethods.init = noop);
 
   return function(newClassName, methods, options) { var klass;
-    if(klass = progenyCache[newClassName]) {
+    if(klass = Object.progeny.cache[newClassName]) {
       return klass;
     }
 
@@ -42,7 +42,7 @@ var progenitorFactory = exports = module.exports = function(baseClass) {
 
     baseClass.classMethods.inherited.call(baseClass, klass);
 
-    return progenyCache[newClassName] = klass;
+    return Object.progeny.cache[newClassName] = klass;
   }
 };
 
@@ -147,6 +147,7 @@ var progenitorFactory = require('./lib/factory');
 
 exports = module.exports = function() {
   Object.progeny || (Object.progeny = progenitorFactory(Object));
+  Object.progeny.cache || (Object.progeny.cache = {});
   Error.progeny || (Error.progeny = progenitorFactory(Error));
 };
 

@@ -1,5 +1,3 @@
-global.progenyCache = {};
-
 describe('progenitor', function() {
   var Athlete, Runner, instance;
 
